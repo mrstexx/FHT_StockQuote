@@ -1,3 +1,5 @@
+#include "HashTable.h"
+#include "Stock.h"
 #pragma once
 
 #define ADD 1
@@ -27,6 +29,9 @@ private:
 	void plotStockQuote();
 	void saveHashTable();
 	void loadHashTable();
+	
+	// hash table
+	HashTable* hashTable;
 public:
 	MainMenu();
 	~MainMenu();

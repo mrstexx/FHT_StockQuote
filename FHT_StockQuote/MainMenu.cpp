@@ -5,6 +5,7 @@ using namespace std;
 
 MainMenu::MainMenu()
 {
+	hashTable = new HashTable();
 	printHeader();
 	printMainMenu();
 	inputHandler();
@@ -95,7 +96,19 @@ void MainMenu::inputHandler()
 }
 
 void MainMenu::addNewStock()
-{}
+{
+	string stockName = "";
+	string WKN = "";
+	string stockShortcut = "";
+	cout << "Aktionsname: " << endl;
+	cin >> stockName;
+	cout << "WKN: " << endl;
+	cin >> WKN;
+	cout << "Aktionskuerzel: " << endl;
+	cin >> stockShortcut;
+	Stock newStock(stockName, WKN, stockShortcut);
+	hashTable->add(newStock);
+}
 
 void MainMenu::deleteStock()
 {}
@@ -113,7 +126,11 @@ void MainMenu::saveHashTable()
 {}
 
 void MainMenu::loadHashTable()
-{}
+{
+	hashTable->listAll();
+}
 
 MainMenu::~MainMenu()
-{}
+{
+	delete hashTable;
+}
