@@ -27,6 +27,9 @@
     <ClCompile Include="Stock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IOHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainMenu.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Stock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IOHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

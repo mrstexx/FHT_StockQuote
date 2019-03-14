@@ -52,18 +52,19 @@ void MainMenu::inputHandler()
 	{
 		cout << "Benutzer Eingabe(Nummer): ";
 		cin >> userInput;
-		if (userInput < ADD || userInput > QUIT)
+		if (userInput < ADD || userInput > QUIT || cin.fail())
 		{
 			cout << "Falsche Eingabe! Versuchen Sie wieder." << endl;
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			continue;
 		}
 		switch (userInput)
 		{
 		case ADD:
-			// add new stock to hashtable
 			addNewStock();
 			break;
 		case DEL:
-			// delete stock from hashtable
 			deleteStock();
 			break;
 		case IMPORT:
@@ -71,7 +72,6 @@ void MainMenu::inputHandler()
 			importStockQuote();
 			break;
 		case SEARCH:
-			// search for stock in hashtable
 			searchStock();
 			break;
 		case PLOT:
@@ -100,24 +100,44 @@ void MainMenu::addNewStock()
 	string stockName = "";
 	string WKN = "";
 	string stockShortcut = "";
-	cout << "Aktionsname: " << endl;
-	cin >> stockName;
-	cout << "WKN: " << endl;
+	cout << "Aktionsname: ";
+	cin.ignore();
+	getline(cin, stockName);
+	cout << "WKN: ";
 	cin >> WKN;
-	cout << "Aktionskuerzel: " << endl;
+	cout << "Aktionskuerzel: ";
 	cin >> stockShortcut;
 	Stock newStock(stockName, WKN, stockShortcut);
 	hashTable->add(newStock);
 }
 
 void MainMenu::deleteStock()
-{}
+{
+	string stockName = "";
+	cout << "Aktionsname: ";
+	cin.ignore();
+	getline(cin, stockName);
+	hashTable->remove(stockName);
+}
 
 void MainMenu::importStockQuote()
 {}
 
 void MainMenu::searchStock()
-{}
+{
+	string stockName = "";
+	cout << "Geben Sie Aktiensname oder WKN ein: ";
+	cin.ignore();
+	getline(cin, stockName);
+	if (hashTable->search(stockName))
+	{
+		cout << "Eingegebene Name/WKN existiert." << endl;
+	}
+	else
+	{
+		cout << "Eingegeben Name/WKN existiert nicht." << endl;
+	}
+}
 
 void MainMenu::plotStockQuote()
 {}

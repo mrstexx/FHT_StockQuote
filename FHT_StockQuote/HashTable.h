@@ -16,8 +16,8 @@ public:
 	HashTable();
 	~HashTable();
 	void add(Stock&);
-	void remove();
-	int search();
+	void remove(string);
+	bool search(string);
 
 	// test function
 	void listAll();

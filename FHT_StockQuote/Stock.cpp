@@ -1,7 +1,11 @@
 #include "Stock.h"
 
 Stock::Stock()
-{}
+{
+	this->stockName = "";
+	this->WKN = "";
+	this->stockShortcut = "";
+}
 
 Stock::Stock(string name, string WKN, string shortcut)
 {

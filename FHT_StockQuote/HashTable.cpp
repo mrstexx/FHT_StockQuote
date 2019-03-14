@@ -2,24 +2,50 @@
 
 HashTable::HashTable()
 {
-	stocks = new Stock[CAPACITY];
+	stocks = new Stock[CAPACITY]();
 }
-
-HashTable::~HashTable()
-{}
 
 void HashTable::add(Stock& stock)
 {
-	int hash = this->hashCode(stock.getStocktName());
+	int i = 1;
+	int hash = (int)(this->hashCode(stock.getStocktName()) + pow(i, 2)) % CAPACITY;
+	while (stocks[hash].getStocktName() != "")
+	{
+		i++;
+		hash = (int)(this->hashCode(stock.getStocktName()) + pow(i, 2)) % CAPACITY;
+	}
 	stocks[hash] = stock;
 }
 
-void HashTable::remove()
-{}
-
-int HashTable::search()
+void HashTable::remove(string userInput)
 {
-	return 0;
+	int i = 0;
+	while (i < CAPACITY)
+	{
+		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
+		if (stocks[hash].getStocktName() == userInput)
+		{
+			Stock *replaceStock = new Stock();
+			stocks[hash] = *replaceStock;
+			break;
+		}
+		i++;
+	}
+}
+
+bool HashTable::search(string userInput)
+{
+	int i = 0;
+	while (i < CAPACITY)
+	{
+		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
+		if (stocks[hash].getStocktName() == userInput)
+		{
+			return true;
+		}
+		i++;
+	}
+	return false;
 }
 
 void HashTable::listAll()
@@ -36,10 +62,22 @@ void HashTable::listAll()
 int HashTable::hashCode(string name)
 {
 	int hash = 0;
+	int hashBase = 31;
 	for (int i = 0; i < (int)name.size(); i++)
 	{
-		hash += (int)(name[i] * pow(31, (int)name.size() - 1));
+		hash = (hash * hashBase + name[i]);
 	}
-	return hash % CAPACITY;
+	hash %= CAPACITY;
+	if (hash < 0)
+	{
+		hash += CAPACITY;
+	}
+	//cout << "******" << hash << endl;
+	return hash;
 }
 
+HashTable::~HashTable()
+{
+	delete[] stocks;
+	stocks = nullptr;
+}

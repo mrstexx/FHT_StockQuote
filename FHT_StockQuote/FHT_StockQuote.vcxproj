@@ -119,12 +119,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="HashTable.cpp" />
+    <ClCompile Include="IOHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Stock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="IOHandler.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Stock.h" />
   </ItemGroup>
