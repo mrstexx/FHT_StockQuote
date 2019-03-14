@@ -9,6 +9,7 @@ IOHandler::IOHandler(HashTable *hashTable, string fileName)
 IOHandler::IOHandler(string fileName)
 {
 	this->fileName = fileName;
+	this->hashTable = new HashTable();
 }
 
 void IOHandler::saveHashFile()
@@ -20,7 +21,7 @@ void IOHandler::saveHashFile()
 	{
 		if (stocks[i].getStockName() != "")
 		{
-			output << i << "," << stocks[i].getStockName() + "," << stocks[i].getWKN() + "," << 
+			output << stocks[i].getStockName() + "," << stocks[i].getWKN() + "," <<
 				stocks[i].getStockShortcut() + "," << stocks[i].getQuoteDataFile() + "\n";
 		}
 	}
@@ -30,26 +31,34 @@ void IOHandler::saveHashFile()
 
 HashTable* IOHandler::loadHashFile()
 {
+	string stockName = "";
+	string WKN = "";
+	string stockShortcut = "";
+	string stockQuoteDataFileName = "";
 	ifstream input;
 	input.open(this->fileName + ".csv");
-	string temp = "";
-	while (!input.eof())
+	while (input.good())
 	{
 		string line = "";
 		getline(input, line);
-		stringstream lineAsStream (line);
-		string word = "";
-		while (lineAsStream >> word)
+		stringstream ss(line);
+		if (input.eof())
 		{
-			cout << word << endl;
+			break;
 		}
-		//cout << line << endl;
+		getline(ss, stockName, ',');
+		getline(ss, WKN, ',');
+		getline(ss, stockShortcut, ',');
+		getline(ss, stockQuoteDataFileName, ',');
+		Stock newStock(stockName, WKN, stockShortcut);
+		if (stockQuoteDataFileName != "")
+		{
+			newStock.setQuoteDataFile(stockQuoteDataFileName);
+		}
+		this->hashTable->add(newStock);
 	}
 	return this->hashTable;
 }
 
 IOHandler::~IOHandler()
-{
-	delete this->hashTable;
-	this->hashTable = nullptr;
-}
+{}

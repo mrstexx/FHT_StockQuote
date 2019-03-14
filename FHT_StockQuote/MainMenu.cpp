@@ -141,6 +141,7 @@ void MainMenu::searchStock()
 
 void MainMenu::plotStockQuote()
 {
+	cout << this->hashTable->getStocks()[561].getStockName() << endl;
 	hashTable->listAll();
 }
 
@@ -161,11 +162,11 @@ void MainMenu::loadHashTable()
 	cin.ignore();
 	getline(cin, fileName);
 	IOHandler io(fileName);
-	hashTable = io.loadHashFile();
+	this->hashTable = io.loadHashFile();
 }
 
 MainMenu::~MainMenu()
 {
-	delete hashTable;
-	hashTable = nullptr;
+	delete this->hashTable;
+	this->hashTable = nullptr;
 }
