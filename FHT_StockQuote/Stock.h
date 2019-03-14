@@ -14,9 +14,10 @@ public:
 	Stock();
 	Stock(string, string, string);
 	~Stock();
-	string getStocktName();
+	string getStockName();
 	string getWKN();
 	string getStockShortcut();
 	void setQuoteDataFile(string);
+	string getQuoteDataFile();
 };
 

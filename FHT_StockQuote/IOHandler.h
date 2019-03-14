@@ -1,6 +1,9 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <ostream>
+#include "HashTable.h"
+
 #pragma once
 
 using namespace std;
@@ -8,11 +11,13 @@ using namespace std;
 class IOHandler
 {
 private:
-
+	HashTable* hashTable;
+	string fileName;
 public:
-	IOHandler();
+	IOHandler(HashTable*, string);
+	IOHandler(string);
 	~IOHandler();
-	void saveFile(string);
-	void loadFile(string);
+	void saveHashFile();
+	HashTable* loadHashFile();
 };
 

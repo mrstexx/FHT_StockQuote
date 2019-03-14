@@ -140,17 +140,32 @@ void MainMenu::searchStock()
 }
 
 void MainMenu::plotStockQuote()
-{}
+{
+	hashTable->listAll();
+}
 
 void MainMenu::saveHashTable()
-{}
+{
+	string fileName = "";
+	cout << "Geben Sie Datei Name ein: ";
+	cin.ignore();
+	getline(cin, fileName);
+	IOHandler io(hashTable, fileName);
+	io.saveHashFile();
+}
 
 void MainMenu::loadHashTable()
 {
-	hashTable->listAll();
+	string fileName = "";
+	cout << "Geben Sie Datei Name ein: ";
+	cin.ignore();
+	getline(cin, fileName);
+	IOHandler io(fileName);
+	hashTable = io.loadHashFile();
 }
 
 MainMenu::~MainMenu()
 {
 	delete hashTable;
+	hashTable = nullptr;
 }

@@ -8,11 +8,11 @@ HashTable::HashTable()
 void HashTable::add(Stock& stock)
 {
 	int i = 1;
-	int hash = (int)(this->hashCode(stock.getStocktName()) + pow(i, 2)) % CAPACITY;
-	while (stocks[hash].getStocktName() != "")
+	int hash = (int)(this->hashCode(stock.getStockName()) + pow(i, 2)) % CAPACITY;
+	while (stocks[hash].getStockName() != "")
 	{
 		i++;
-		hash = (int)(this->hashCode(stock.getStocktName()) + pow(i, 2)) % CAPACITY;
+		hash = (int)(this->hashCode(stock.getStockName()) + pow(i, 2)) % CAPACITY;
 	}
 	stocks[hash] = stock;
 }
@@ -23,7 +23,7 @@ void HashTable::remove(string userInput)
 	while (i < CAPACITY)
 	{
 		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
-		if (stocks[hash].getStocktName() == userInput)
+		if (stocks[hash].getStockName() == userInput)
 		{
 			Stock *replaceStock = new Stock();
 			stocks[hash] = *replaceStock;
@@ -39,7 +39,7 @@ bool HashTable::search(string userInput)
 	while (i < CAPACITY)
 	{
 		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
-		if (stocks[hash].getStocktName() == userInput)
+		if (stocks[hash].getStockName() == userInput)
 		{
 			return true;
 		}
@@ -52,9 +52,9 @@ void HashTable::listAll()
 {
 	for (int i = 0; i < CAPACITY; i++)
 	{
-		if (stocks[i].getStocktName() != "")
+		if (stocks[i].getStockName() != "")
 		{
-			cout << stocks[i].getStocktName() << endl;
+			cout << stocks[i].getStockName() << endl;
 		}
 	}
 }
@@ -74,6 +74,11 @@ int HashTable::hashCode(string name)
 	}
 	//cout << "******" << hash << endl;
 	return hash;
+}
+
+Stock *HashTable::getStocks()
+{
+	return this->stocks;
 }
 
 HashTable::~HashTable()

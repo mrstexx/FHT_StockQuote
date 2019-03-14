@@ -9,7 +9,6 @@ using namespace std;
 class HashTable
 {
 private:
-	int const CAPACITY = 1000;
 	Stock* stocks;
 	int hashCode(string);
 public:
@@ -18,7 +17,8 @@ public:
 	void add(Stock&);
 	void remove(string);
 	bool search(string);
-
+	Stock* getStocks();
+	int const CAPACITY = 1000;
 	// test function
 	void listAll();
 };

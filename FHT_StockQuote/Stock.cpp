@@ -5,6 +5,7 @@ Stock::Stock()
 	this->stockName = "";
 	this->WKN = "";
 	this->stockShortcut = "";
+	this->quoteDataFile = "";
 }
 
 Stock::Stock(string name, string WKN, string shortcut)
@@ -12,12 +13,10 @@ Stock::Stock(string name, string WKN, string shortcut)
 	this->stockName = name;
 	this->WKN = WKN;
 	this->stockShortcut = shortcut;
+	this->quoteDataFile = "";
 }
 
-Stock::~Stock()
-{}
-
-string Stock::getStocktName()
+string Stock::getStockName()
 {
 	return this->stockName;
 }
@@ -36,3 +35,11 @@ void Stock::setQuoteDataFile(string fileName)
 {
 	this->quoteDataFile = fileName;
 }
+
+string Stock::getQuoteDataFile()
+{
+	return this->quoteDataFile;
+}
+
+Stock::~Stock()
+{}

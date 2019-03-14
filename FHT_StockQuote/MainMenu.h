@@ -1,5 +1,7 @@
 #include "HashTable.h"
 #include "Stock.h"
+#include "IOHandler.h"
+
 #pragma once
 
 #define ADD 1
