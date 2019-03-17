@@ -2,17 +2,17 @@
 
 HashTable::HashTable()
 {
-	stocks = new Stock[CAPACITY]();
+	stocks = new Stock*[CAPACITY]();
 }
 
-void HashTable::add(Stock& stock)
+void HashTable::add(Stock* stock)
 {
 	int i = 1;
-	int hash = (int)(this->hashCode(stock.getStockName()) + pow(i, 2)) % CAPACITY;
-	while (stocks[hash].getStockName() != "")
+	int hash = (int)(this->hashCode(stock->getStockName()) + pow(i, 2)) % CAPACITY;
+	while (stocks[hash] != NULL)
 	{
 		i++;
-		hash = (int)(this->hashCode(stock.getStockName()) + pow(i, 2)) % CAPACITY;
+		hash = (int)(this->hashCode(stock->getStockName()) + pow(i, 2)) % CAPACITY;
 	}
 	stocks[hash] = stock;
 }
@@ -23,11 +23,14 @@ void HashTable::remove(string userInput)
 	while (i < CAPACITY)
 	{
 		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
-		if (stocks[hash].getStockName() == userInput)
+		if (stocks[hash] != NULL)
 		{
-			Stock *replaceStock = new Stock();
-			stocks[hash] = *replaceStock;
-			break;
+			if (stocks[hash]->getStockName() == userInput)
+			{
+				//Stock *replaceStock = new Stock();
+				stocks[hash] = nullptr;
+				break;
+			}
 		}
 		i++;
 	}
@@ -39,22 +42,33 @@ bool HashTable::search(string userInput)
 	while (i < CAPACITY)
 	{
 		int hash = (int)(this->hashCode(userInput) + pow(i + 1, 2)) % CAPACITY;
-		if (stocks[hash].getStockName() == userInput)
+		if (stocks[hash] != NULL)
 		{
-			return true;
+			if (stocks[hash]->getStockName() == userInput)
+			{
+				stocks[hash]->listQuoteData();
+				return true;
+			}
 		}
 		i++;
 	}
 	return false;
 }
 
+Stock* HashTable::getStock(string stockName)
+{
+	int hash = hashCode(stockName) + 1;
+	return this->stocks[hash];
+}
+
+// temp function
 void HashTable::listAll()
 {
 	for (int i = 0; i < CAPACITY; i++)
 	{
-		if (stocks[i].getStockName() != "")
+		if (stocks[i] != NULL)
 		{
-			cout << stocks[i].getStockName() << endl;
+			cout << stocks[i]->getStockName() << endl;
 		}
 	}
 }
@@ -76,7 +90,7 @@ int HashTable::hashCode(string name)
 	return hash;
 }
 
-Stock *HashTable::getStocks()
+Stock **HashTable::getStocks()
 {
 	return this->stocks;
 }

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <ostream>
 #include "HashTable.h"
+#include "QuoteData.h"
 
 #pragma once
 
@@ -19,5 +20,6 @@ public:
 	~IOHandler();
 	void saveHashFile();
 	HashTable* loadHashFile();
+	void importQuoteData(Stock*);
 };
 

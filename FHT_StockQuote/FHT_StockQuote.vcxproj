@@ -122,12 +122,14 @@
     <ClCompile Include="IOHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="QuoteData.cpp" />
     <ClCompile Include="Stock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="IOHandler.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="QuoteData.h" />
     <ClInclude Include="Stock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

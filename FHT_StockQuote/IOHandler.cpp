@@ -16,13 +16,13 @@ void IOHandler::saveHashFile()
 {
 	ofstream output;
 	output.open(this->fileName + ".csv");
-	Stock* stocks = this->hashTable->getStocks();
+	Stock** stocks = this->hashTable->getStocks();
 	for (int i = 0; i < hashTable->CAPACITY; i++)
 	{
-		if (stocks[i].getStockName() != "")
+		if (stocks[i]->getStockName() != "")
 		{
-			output << stocks[i].getStockName() + "," << stocks[i].getWKN() + "," <<
-				stocks[i].getStockShortcut() + "," << stocks[i].getQuoteDataFile() + "\n";
+			output << stocks[i]->getStockName() + "," << stocks[i]->getWKN() + "," <<
+				stocks[i]->getStockShortcut() + "," << stocks[i]->getQuoteDataFile() + "\n";
 		}
 	}
 	output.close();
@@ -50,14 +50,51 @@ HashTable* IOHandler::loadHashFile()
 		getline(ss, WKN, ',');
 		getline(ss, stockShortcut, ',');
 		getline(ss, stockQuoteDataFileName, ',');
-		Stock newStock(stockName, WKN, stockShortcut);
+		Stock* newStock = new Stock(stockName, WKN, stockShortcut);
 		if (stockQuoteDataFileName != "")
 		{
-			newStock.setQuoteDataFile(stockQuoteDataFileName);
+			newStock->setQuoteDataFile(stockQuoteDataFileName);
 		}
 		this->hashTable->add(newStock);
 	}
 	return this->hashTable;
+}
+
+void IOHandler::importQuoteData(Stock *stock)
+{
+	stock->setQuoteDataFile(this->fileName);
+	string date = "";
+	string open = "";
+	string high = "";
+	string low = "";
+	string close = "";
+	string adjClose = "";
+	string volume = "";
+	ifstream input;
+	string tmpLine = "";
+	int counter = 0;
+	input.open(this->fileName + ".csv");
+	getline(input, tmpLine);
+	while (input.good() || counter < stock->MAX_NUMBER_OF_QUOTES)
+	{
+		string line = "";
+		getline(input, line);
+		stringstream ss(line);
+		if (input.eof())
+		{
+			break;
+		}
+		getline(ss, date, ',');
+		getline(ss, open, ',');
+		getline(ss, high, ',');
+		getline(ss, low, ',');
+		getline(ss, close, ',');
+		getline(ss, adjClose, ',');
+		getline(ss, volume, ',');
+		QuoteData *quote = new QuoteData(date, stod(open), stod(high), stod(low), stod(close), stod(adjClose), stoi(volume));
+		//quotes[counter] = qd;
+		stock->quotes.push_back(quote);
+	}
 }
 
 IOHandler::~IOHandler()

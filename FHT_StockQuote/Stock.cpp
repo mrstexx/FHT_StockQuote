@@ -41,5 +41,26 @@ string Stock::getQuoteDataFile()
 	return this->quoteDataFile;
 }
 
+vector<QuoteData*> Stock::getQuotes()
+{
+	return this->quotes;
+}
+
+void Stock::listQuoteData()
+{
+	if (quotes.size() == 0)
+	{
+		cout << "Es gibt keine gespeicherte Aktienskursdaten" << endl;
+		return;
+	}
+	for (unsigned int i = 0; i < quotes.size(); i++)
+	{
+		cout << quotes[i]->getDate() << " - " << quotes[i]->getOpen() << " - "
+			<< quotes[i]->getHigh() << " - " << quotes[i]->getLow() << " - "
+			<< quotes[i]->getClose() << " - " << quotes[i]->getAdjClose() << " - "
+			<< quotes[i]->getVolume() << endl;
+	}
+}
+
 Stock::~Stock()
 {}

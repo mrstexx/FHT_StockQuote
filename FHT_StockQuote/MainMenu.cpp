@@ -107,7 +107,7 @@ void MainMenu::addNewStock()
 	cin >> WKN;
 	cout << "Aktionskuerzel: ";
 	cin >> stockShortcut;
-	Stock newStock(stockName, WKN, stockShortcut);
+	Stock* newStock = new Stock(stockName, WKN, stockShortcut);
 	hashTable->add(newStock);
 }
 
@@ -121,7 +121,18 @@ void MainMenu::deleteStock()
 }
 
 void MainMenu::importStockQuote()
-{}
+{
+	string stockName = "";
+	string quoteFileName = "";
+	cout << "Geben Sie Aktiensname ein: ";
+	cin.ignore();
+	getline(cin, stockName);
+	cout << "Geben Sie Aktienskurse Dateiname ein: ";
+	getline(cin, quoteFileName);
+	Stock *stock = hashTable->getStock(stockName);
+	IOHandler io(quoteFileName);
+	io.importQuoteData(stock);
+}
 
 void MainMenu::searchStock()
 {
@@ -129,11 +140,7 @@ void MainMenu::searchStock()
 	cout << "Geben Sie Aktiensname oder WKN ein: ";
 	cin.ignore();
 	getline(cin, stockName);
-	if (hashTable->search(stockName))
-	{
-		cout << "Eingegebene Name/WKN existiert." << endl;
-	}
-	else
+	if (!hashTable->search(stockName))
 	{
 		cout << "Eingegeben Name/WKN existiert nicht." << endl;
 	}
@@ -141,7 +148,7 @@ void MainMenu::searchStock()
 
 void MainMenu::plotStockQuote()
 {
-	cout << this->hashTable->getStocks()[561].getStockName() << endl;
+	//cout << this->hashTable->getStocks()[561].getStockName() << endl;
 	hashTable->listAll();
 }
 

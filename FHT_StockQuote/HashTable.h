@@ -9,17 +9,18 @@ using namespace std;
 class HashTable
 {
 private:
-	Stock* stocks;
+	Stock** stocks;
 	int hashCode(string);
 public:
 	HashTable();
 	~HashTable();
-	void add(Stock&);
+	void add(Stock*);
 	void remove(string);
 	bool search(string);
-	Stock* getStocks();
+	Stock** getStocks();
 	int const CAPACITY = 1000;
 	// test function
+	Stock* getStock(string stockName);
 	void listAll();
 };
 
